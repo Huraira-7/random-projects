@@ -1,0 +1,21 @@
+{
+    "manifest_version": 3,
+    "name": "My First Chrome Extension",
+    "version": "1.0",
+    "description": "A simple Chrome extension that highlights the text parts that are different between the two texts",
+    "background": {
+    "service_worker": "background.js"
+    },
+    "icons": {
+      "16": "highlighter-icon.png"
+    },
+    "permissions": ["activeTab", "tabs"],
+    "web_accessible_resources": [
+    {
+      "resources": ["textdiff.js", "textdiff.html"],
+      "matches": ["chrome-extension://*/*"]
+    }
+  ],
+  "action": {}
+
+}

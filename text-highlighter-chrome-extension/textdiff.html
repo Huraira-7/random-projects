@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Difference Highlighterrr</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            text-align: center;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        .column {
+            width: 45%;
+            margin-right:10px;
+            margin-left:10px;
+        }
+        textarea {
+            width: 100%;
+            height: 150px;
+            margin-bottom: 10px;
+            display: block;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+        .highlight {
+            background-color: yellow;
+        }
+        .result {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-top: 10px;
+            font-size: 11px;
+            margin-bottom:10px;
+            white-space: pre-wrap;
+            width: 98%;
+            text-align:left;
+            display: block;
+            overflow-x: auto;
+            font-family: monospace; /* Better for code display */
+        }
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .error {
+            color: red;
+        }
+        .subtitle {
+            font-size: medium;
+        }
+        .highlight-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h2>Compare Texxts</h2>
+    <p class="subtitle">  This page compares texts word-for-word (not letter wise) - considers order of words as well, and is made to generally compare code files (allowed formats: <b> .sh .py .cpp .c .ipynb .html .css .js .txt </b>) </p>
+    <p class="subtitle">  For <b> .ipynb </b> files, it only takes code cells and compares them (NOT the text cells or visualizations) </p> 
+    <div class="buttons">
+        <input type="file" id="file1" accept=".txt,.py,.cpp,.c,.sh,.ipynb,.html,.css,.js" >
+        <input type="file" id="file2" accept=".txt,.py,.cpp,.c,.sh,.ipynb,.html,.css,.js" >
+        <button id="clearButton">Clear</button>
+    </div>
+    <p id="error-message" class="error"></p>
+    <div class="container">
+        <div class="column">
+            <textarea id="text1" placeholder="Enter first text..."></textarea>
+        </div>
+        <div class="column">
+            <textarea id="text2" placeholder="Enter second text..."></textarea>
+        </div>
+    </div>
+    <button id="compareButton">Compare</button>
+    <h3 class="highlight-title">Highlighted Differences</h3>
+    <div class="container">
+        <div class="column">
+            <div class="result" id="output1"></div>
+        </div>
+        <div class="column">
+            <div class="result" id="output2"></div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

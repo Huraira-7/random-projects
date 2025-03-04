@@ -1,0 +1,24 @@
+/* timer.css */
+
+
+.timer > svg > circle {
+    fill: none;
+    stroke-opacity: 0.3;
+    stroke: #0d6efd;
+    stroke-width: 4;
+    transform-origin: center center;
+    transform: rotate(-90deg);
+}
+
+.timer > svg > circle + circle {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    stroke-linecap: round;
+    stroke-opacity: 1;
+}
+
+.timer.animatable > svg > circle + circle {
+    transition: stroke-dashoffset 0.3s ease;
+}
+
+
