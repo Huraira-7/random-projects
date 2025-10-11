@@ -1,0 +1,14 @@
+Placeholder file for assets directory.
+
+For production use, you should replace this with:
+- icon.png (1024x1024)
+- adaptive-icon.png (1024x1024 with foreground element)
+- splash.png (1284x2778)
+- favicon.png (48x48)
+
+You can generate these assets using:
+1. Online tools like https://appicon.co/
+2. Or use the default Expo assets temporarily
+
+For now, the app will use Expo's default assets when you run it.
+
