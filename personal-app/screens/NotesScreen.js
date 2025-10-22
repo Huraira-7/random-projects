@@ -30,7 +30,7 @@ Notifications.setNotificationHandler({
   }),
 });
 
-export default function NotesScreen() {
+export default function NotesScreen({ pendingNoteId, onNoteOpened }) {
   const [notes, setNotes] = useState([]);
   const [showAddNote, setShowAddNote] = useState(false);
   const [editingNote, setEditingNote] = useState(null);
@@ -63,6 +63,20 @@ export default function NotesScreen() {
     };
   }, []);
 
+  // Handle pending note from global notification response (for APK builds)
+  useEffect(() => {
+    if (pendingNoteId && notes.length > 0) {
+      const note = notes.find(n => n.id === pendingNoteId);
+      if (note) {
+        console.log('Opening note from global notification:', note);
+        openNoteViewer(note);
+        if (onNoteOpened) {
+          onNoteOpened();
+        }
+      }
+    }
+  }, [pendingNoteId, notes, onNoteOpened]);
+
   useEffect(() => {
     // Setup notification received listener - reschedule when notification fires
     if (notificationListener.current) {
@@ -72,9 +86,9 @@ export default function NotesScreen() {
     notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
       console.log('Notification received:', notification);
       console.log('Current notes count:', notes.length);
-      // Automatically schedule next notification at a random time
+      // Automatically schedule next notification at the interval time
       if (notes.length > 0) {
-        scheduleRandomNotification();
+        schedulePeriodicNotification();
       }
     });
 
@@ -97,9 +111,9 @@ export default function NotesScreen() {
       }
     });
 
-    // Start random notification cycle when notes change
+    // Start periodic notification cycle when notes change
     if (notes.length > 0) {
-      scheduleRandomNotification();
+      schedulePeriodicNotification();
     }
   }, [notes]);
 
@@ -241,21 +255,20 @@ export default function NotesScreen() {
     return token;
   };
 
-  // Schedule a notification at a random time within the interval
-  const scheduleRandomNotification = async () => {
+  // Schedule a notification periodically after the interval time
+  const schedulePeriodicNotification = async () => {
     if (notes.length === 0) return;
 
     // Cancel all existing scheduled notifications
     await Notifications.cancelAllScheduledNotificationsAsync();
 
-    // Calculate random time in seconds (0 to NOTIFICATION_INTERVAL_MINUTES * 60)
-    const maxSeconds = NOTIFICATION_INTERVAL_MINUTES * 60;
-    const randomSeconds = Math.floor(Math.random() * maxSeconds);
+    // Calculate exact interval time in seconds
+    const intervalSeconds = NOTIFICATION_INTERVAL_MINUTES * 60;
 
     // Pick a random note
     const randomNote = notes[Math.floor(Math.random() * notes.length)];
 
-    // Schedule notification at the random time (NOT repeating)
+    // Schedule notification at the exact interval time (NOT repeating)
     await Notifications.scheduleNotificationAsync({
       content: {
         title: '📝 ' + randomNote.title,
@@ -263,12 +276,12 @@ export default function NotesScreen() {
         data: { noteId: randomNote.id },
       },
       trigger: {
-        seconds: randomSeconds,
+        seconds: intervalSeconds,
         repeats: false, // Don't repeat - we'll reschedule after it fires
       },
     });
 
-    console.log(`Notification scheduled in ${randomSeconds} seconds (${(randomSeconds / 60).toFixed(1)} minutes)`);
+    console.log(`Notification scheduled in ${intervalSeconds} seconds (${NOTIFICATION_INTERVAL_MINUTES} minutes)`);
   };
 
   // Send immediate test notification with a random note
