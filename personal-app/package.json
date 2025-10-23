@@ -4,8 +4,8 @@
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
     "web": "expo start --web"
   },
   "dependencies": {
@@ -24,7 +24,6 @@
     "@expo/vector-icons": "^14.0.0",
     "expo-notifications": "~0.28.1",
     "expo-device": "~6.0.2",
-    "expo-font": "~12.0.5",
     "@expo-google-fonts/great-vibes": "^0.2.3",
     "@expo-google-fonts/alex-brush": "^0.2.3"
   },
@@ -33,4 +32,3 @@
   },
   "private": true
 }
-
